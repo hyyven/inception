@@ -1,7 +1,8 @@
 FROM debian:buster
 RUN apt update -y && apt upgrade -y
-RUN apt install -y curl vim zsh git wget php7.3 php-fpm php-mysql mariadb-client
-RUN sh -c "$(wget https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)" --unattended
+RUN apt install -y wget php7.3 php-fpm php-mysql mariadb-client
+# Run apt install -y vim zsh git curl
+# RUN sh -c "$(wget https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)" --unattended
 # CMD ["zsh"]
 
 RUN wget https://fr.wordpress.org/wordpress-6.0-fr_FR.tar.gz -P /var/www

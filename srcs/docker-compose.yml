@@ -54,14 +54,14 @@ volumes:
       type: 'none'
       o: 'bind'
       # device: '/Users/login/data/wordpress'
-      device: 'C:\dockersdata\wordpress'
+      device: '../data/wordpress'
   mariadb:
     driver: local
     driver_opts:
       type: 'none'
       o: 'bind'
       # device: '/Users/login/data/mariadb'
-      device: 'C:\dockersdata\mariadb'
+      device: '../data/mariadb'
 
 networks:
   inception:
