@@ -1,4 +1,3 @@
 data/
-data
-data\
-# srcs/.env
+srcs/.env
+en.subject.pdf
