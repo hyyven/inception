@@ -5,7 +5,7 @@ mkdir -p /run/php
 cd /var/www/wordpress
 
 while ! mysqladmin ping -h mariadb -u ${SQL_USER} -p${SQL_PASSWORD} --silent; do
-echo "MariaDB n'est pas encore prêt... nouvelle tentative dans 1 seconde"
+echo "MariaDB not ready yet... trying again in 1 second"
     sleep 1
 done
 

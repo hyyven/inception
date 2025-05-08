@@ -6,59 +6,61 @@ DATA_DIR_DB = data/mariadb
 
 GREEN = \033[0;32m
 YELLOW = \033[0;33m
+BLUE = \033[0;34m
 RED = \033[0;31m
 RESET = \033[0m
 
 all: prepare up
 
 prepare:
-	@echo "$(YELLOW)Préparation de l'environnement...$(RESET)"
+	@echo "$(YELLOW)Preparing environment...$(RESET)"
 	@mkdir -p $(DATA_DIR_WP)
 	@mkdir -p $(DATA_DIR_DB)
 	@chmod 755 $(DATA_DIR_WP)
 	@chmod 755 $(DATA_DIR_DB)
 	@if [ ! -f $(ENV_FILE) ]; then \
-		echo "$(RED)Fichier .env non trouvé. Veuillez créer le fichier $(ENV_FILE)$(RESET)"; \
+		echo "$(RED).env file not found. Please create the file $(ENV_FILE)$(RESET)"; \
 		exit 1; \
 	fi
 
 build:
-	@echo "$(YELLOW)Construction des images Docker...$(RESET)"
+	@echo "$(YELLOW)Building Docker images...$(RESET)"
 	@$(DOCKER_COMPOSE) build
 
 up:
-	@echo "$(YELLOW)Démarrage des conteneurs...$(RESET)"
+	@echo "$(YELLOW)Starting containers...$(RESET)"
 	@$(DOCKER_COMPOSE) up -d
-	@echo "$(GREEN)Les services sont prêts ! Accès à l'application via https://localhost$(RESET)"
+	@echo "$(GREEN)Services are ready! Access the application via https://localhost$(RESET)"
+	@echo "$(BLUE)WordPress Admin Panel: https://localhost/wp-admin/$(RESET)"
 
 down:
-	@echo "$(YELLOW)Arrêt des conteneurs...$(RESET)"
+	@echo "$(YELLOW)Stopping containers...$(RESET)"
 	@$(DOCKER_COMPOSE) down
-	@echo "$(GREEN)Les conteneurs ont été arrêtés.$(RESET)"
+	@echo "$(GREEN)Containers have been stopped.$(RESET)"
 
 logs:
-	@echo "$(YELLOW)Affichage des logs...$(RESET)"
+	@echo "$(YELLOW)Displaying logs...$(RESET)"
 	@$(DOCKER_COMPOSE) logs -f
 
 relogs: re
-	@echo "$(GREEN)Reconstruction terminée. Affichage des logs en temps réel (Ctrl+C pour quitter)...$(RESET)"
+	@echo "$(GREEN)Rebuild completed. Displaying logs in real time (Ctrl+C to quit)...$(RESET)"
 	@$(DOCKER_COMPOSE) logs -f
 
 ps:
-	@echo "$(YELLOW)État des conteneurs:$(RESET)"
+	@echo "$(YELLOW)Container status:$(RESET)"
 	@$(DOCKER_COMPOSE) ps
 
 clean: down
-	@echo "$(YELLOW)Nettoyage des conteneurs...$(RESET)"
+	@echo "$(YELLOW)Cleaning containers...$(RESET)"
 	@docker system prune -a --force
-	@echo "$(GREEN)Nettoyage terminé.$(RESET)"
+	@echo "$(GREEN)Cleaning completed.$(RESET)"
 
 fclean: clean
-	@echo "$(YELLOW)Suppression des volumes...$(RESET)"
+	@echo "$(YELLOW)Removing volumes...$(RESET)"
 	@$(DOCKER_COMPOSE) down -v
-	@echo "$(YELLOW)Suppression des données des volumes locaux...$(RESET)"
+	@echo "$(YELLOW)Removing local volume data...$(RESET)"
 	@rm -rf $(DATA_DIR_WP)/* $(DATA_DIR_DB)/*
-	@echo "$(GREEN)Nettoyage complet terminé.$(RESET)"
+	@echo "$(GREEN)Complete cleanup finished.$(RESET)"
 
 re: fclean all
 
