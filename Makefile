@@ -23,21 +23,21 @@ prepare:
 	fi
 
 up:
-	@sudo $(DOCKER_COMPOSE) up -d
-	@echo "$(GREEN)Access the application via https://localhost$(RESET)"
-	@echo "$(GREEN)WordPress Admin Panel: https://localhost/wp-admin/$(RESET)"
+	@$(DOCKER_COMPOSE) up -d
+	@echo "$(GREEN)Access the application via https://afont.42.fr/$(RESET)"
+	@echo "$(GREEN)WordPress Admin Panel: https://afont.42.fr/wp-admin/$(RESET)"
 
 down:
-	@sudo $(DOCKER_COMPOSE) down
+	@$(DOCKER_COMPOSE) down
 
 logs:
-	@sudo $(DOCKER_COMPOSE) logs -f
+	@$(DOCKER_COMPOSE) logs -f
 
 relogs: re
-	@sudo $(DOCKER_COMPOSE) logs -f
+	@$(DOCKER_COMPOSE) logs -f
 
 ps:
-	@sudo $(DOCKER_COMPOSE) ps
+	@$(DOCKER_COMPOSE) ps
 
 clean: down
 	@sudo docker system prune -a --force
